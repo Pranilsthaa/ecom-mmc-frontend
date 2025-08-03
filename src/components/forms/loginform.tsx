@@ -9,16 +9,38 @@ import {
   ArrowRight,
   Mail,
   Lock,
+  MailIcon,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import InputField from "../ui/inputField";
+import axios from "axios";
+import LoadingIndicator from "../ui/LoadingIndicator";
 
 interface LoginFormProps {
-  handleLogin: () => void;
+  handleLogin: ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => void;
+  isLoading: boolean;
 }
 
-export default function LoginForm({ handleLogin }: LoginFormProps) {
+export default function LoginForm({ handleLogin, isLoading }: LoginFormProps) {
+  const [loginCred, setLoginCred] = useState({ email: "", password: "" });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: "email" | "password"
+  ) => {
+    setLoginCred({ ...loginCred, [key]: e.target.value });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login form submitted");
+    handleLogin(loginCred);
   };
 
   return (
@@ -123,41 +145,26 @@ export default function LoginForm({ handleLogin }: LoginFormProps) {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="john@example.com"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
-                    />
-                  </div>
+                  <InputField
+                    id="email"
+                    label="Email address"
+                    labelFor="email"
+                    type="email"
+                    Icon={MailIcon}
+                    onChange={(e) => handleChange(e, "email")}
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
-                    />
-                  </div>
+                  <InputField
+                    id="password"
+                    labelFor="password"
+                    label="Password"
+                    type="password"
+                    Icon={Lock}
+                    isPassword
+                    onChange={(e) => handleChange(e, "password")}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
@@ -180,8 +187,14 @@ export default function LoginForm({ handleLogin }: LoginFormProps) {
                   type="submit"
                   className="w-full bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
                 >
-                  <span>Sign In to Your Account</span>
-                  <ArrowRight className="w-4 h-4" />
+                  {isLoading ? (
+                    <LoadingIndicator />
+                  ) : (
+                    <>
+                      <span>Sign In to Your Account</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
 
@@ -235,7 +248,6 @@ export default function LoginForm({ handleLogin }: LoginFormProps) {
                   Don't have an account?{" "}
                   <button
                     type="button"
-                    onClick={handleLogin}
                     className="text-rose-600 hover:text-rose-700 font-semibold transition-colors duration-200 hover:underline"
                   >
                     Create your account
