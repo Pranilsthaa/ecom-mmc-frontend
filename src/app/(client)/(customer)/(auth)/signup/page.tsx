@@ -1,13 +1,14 @@
 "use client";
 import LoginForm from "@/components/forms/loginform";
 import SignupForm from "@/components/forms/signupform";
+import { useSignup } from "@/hooks/auth/useSignup";
 import React from "react";
 
 const Signup = () => {
-  const handleSignup = () => {};
+  const { mutate, isPending } = useSignup();
   return (
     <div>
-      <SignupForm handleSignup={handleSignup} />
+      <SignupForm handleSignup={mutate} isLoading={isPending} />
     </div>
   );
 };

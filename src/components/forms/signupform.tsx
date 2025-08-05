@@ -13,15 +13,41 @@ import {
   Phone,
   Gift,
 } from "lucide-react";
+import { TsignupData } from "@/hooks/auth/useSignup";
+import { useRouter } from "next/navigation";
+import InputField from "../ui/inputField";
+import LoadingIndicator from "../ui/LoadingIndicator";
+import { useState } from "react";
 
 interface SignupFormProps {
-  handleSignup: () => void;
+  handleSignup: (data: TsignupData) => void;
+  isLoading: boolean;
 }
 
-export default function SignupForm({ handleSignup }: SignupFormProps) {
+export default function SignupForm({
+  handleSignup,
+  isLoading,
+}: SignupFormProps) {
+  const router = useRouter();
+
+  const [signupData, setSignupData] = useState<TsignupData>({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup form submitted");
+    handleSignup(signupData);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: keyof TsignupData
+  ) => {
+    setSignupData({ ...signupData, [key]: e.target.value });
   };
 
   return (
@@ -141,117 +167,78 @@ export default function SignupForm({ handleSignup }: SignupFormProps) {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label
-                      htmlFor="firstName"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      First Name
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        id="firstName"
-                        type="text"
-                        placeholder="John"
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                        required
-                      />
-                    </div>
+                    <InputField
+                      label="First Name"
+                      labelFor="firstName"
+                      placeholder="Enter first name"
+                      id="firstName"
+                      Icon={User}
+                      value={signupData.firstname}
+                      onChange={(e) => handleChange(e, "firstname")}
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label
-                      htmlFor="lastName"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Last Name
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        id="lastName"
-                        type="text"
-                        placeholder="Doe"
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="john@example.com"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
+                    <InputField
+                      label="Last Name"
+                      labelFor="lastName"
+                      placeholder="Enter last name"
+                      id="lastName"
+                      Icon={User}
+                      value={signupData.lastname}
+                      onChange={(e) => handleChange(e, "lastname")}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Phone Number
-                  </label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="phone"
-                      type="tel"
-                      placeholder="+1 (555) 123-4567"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
-                    />
-                  </div>
+                  <InputField
+                    label="Email Address"
+                    labelFor="email"
+                    placeholder="Enter email address"
+                    id="email"
+                    Icon={Mail}
+                    type="email"
+                    value={signupData.email}
+                    onChange={(e) => handleChange(e, "email")}
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
-                    />
-                  </div>
+                  <InputField
+                    label="Phone Number"
+                    labelFor="phone"
+                    placeholder="+977 123-4567"
+                    id="phone"
+                    Icon={Phone}
+                    type="number"
+                    value={signupData.phone}
+                    onChange={(e) => handleChange(e, "phone")}
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Confirm Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm"
-                      required
-                    />
-                  </div>
+                  <InputField
+                    label="Password"
+                    labelFor="password"
+                    placeholder="••••••••"
+                    id="password"
+                    type="password"
+                    Icon={Lock}
+                    isPassword
+                    value={signupData.password}
+                    onChange={(e) => handleChange(e, "password")}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <InputField
+                    label="Confirm Password"
+                    labelFor="confirmPassword"
+                    placeholder="••••••••"
+                    id="confirmPassword"
+                    Icon={Lock}
+                    isPassword
+                  />
                 </div>
 
                 <div className="space-y-3">
@@ -302,8 +289,14 @@ export default function SignupForm({ handleSignup }: SignupFormProps) {
                   type="submit"
                   className="w-full bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
                 >
-                  <span>Create Your Account</span>
-                  <ArrowRight className="w-4 h-4" />
+                  {isLoading ? (
+                    <LoadingIndicator />
+                  ) : (
+                    <>
+                      <span>Create Your Account</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
 
@@ -357,7 +350,7 @@ export default function SignupForm({ handleSignup }: SignupFormProps) {
                   Already have an account?{" "}
                   <button
                     type="button"
-                    onClick={handleSignup}
+                    onClick={() => router.push("login")}
                     className="text-rose-600 hover:text-rose-700 font-semibold transition-colors duration-200 hover:underline"
                   >
                     Sign in here

@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import InputField from "../ui/inputField";
 import axios from "axios";
 import LoadingIndicator from "../ui/LoadingIndicator";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
   handleLogin: ({
@@ -42,6 +43,8 @@ export default function LoginForm({ handleLogin, isLoading }: LoginFormProps) {
     e.preventDefault();
     handleLogin(loginCred);
   };
+
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-amber-50 to-orange-50 flex items-center justify-center p-4">
@@ -151,6 +154,7 @@ export default function LoginForm({ handleLogin, isLoading }: LoginFormProps) {
                     labelFor="email"
                     type="email"
                     Icon={MailIcon}
+                    value={loginCred.email}
                     onChange={(e) => handleChange(e, "email")}
                   />
                 </div>
@@ -163,6 +167,7 @@ export default function LoginForm({ handleLogin, isLoading }: LoginFormProps) {
                     type="password"
                     Icon={Lock}
                     isPassword
+                    value={loginCred.password}
                     onChange={(e) => handleChange(e, "password")}
                   />
                 </div>
@@ -247,6 +252,7 @@ export default function LoginForm({ handleLogin, isLoading }: LoginFormProps) {
                 <p className="text-sm text-gray-600">
                   Don't have an account?{" "}
                   <button
+                    onClick={() => router.push("signup")}
                     type="button"
                     className="text-rose-600 hover:text-rose-700 font-semibold transition-colors duration-200 hover:underline"
                   >

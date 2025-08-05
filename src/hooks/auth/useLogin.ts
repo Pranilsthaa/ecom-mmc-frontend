@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const login = async(data: { email: string; password: string }) => {
-    const res = await api.post('/login', data)
+    const res = await api.post('/auth/login', data)
     return res.data;
 }
 
@@ -20,7 +20,7 @@ export const useLogin = () => {
         },
         onError: (error) => {
             if(error && isAxiosError(error)){
-                toast.error(error.response?.data.message || "Login failed");
+                toast.error(error.response?.data.message);
             }
         }
     });
