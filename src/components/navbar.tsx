@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Frame, Menu, X, ShoppingBag, User, Heart } from "lucide-react";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useThemeStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,22 +26,22 @@ export default function Navbar() {
     { name: "Contact", href: "#contact" },
   ];
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheme(e.target.value as "light" | "dark" | "system");
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-lg border-b border-white/20"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all bg-[var(--color-background)] duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3 cursor-pointer"
+            className="flex items-center space-x-3 cursor-pointer "
           >
             <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
               <Frame className="w-5 h-5 text-white" />
@@ -91,6 +93,11 @@ export default function Navbar() {
               <span>Order Now</span>
             </motion.button>
           </div>
+          <select onChange={handleChange} value={theme}>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="system">System</option>
+          </select>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -114,7 +121,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-200"
+            className="lg:hidden bg-white/95 backdrop-blur-md border-t  border-gray-200"
           >
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item, index) => (

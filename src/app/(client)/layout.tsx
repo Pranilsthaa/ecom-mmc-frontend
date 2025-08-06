@@ -22,14 +22,6 @@ export default function ClientRootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </body>
-    </html>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }

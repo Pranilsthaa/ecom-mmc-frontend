@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
+/* Define custom colors using CSS custom properties */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-accent: #10b981;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-muted: #f1f5f9;
+  --color-border: #e2e8f0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode colors */
+.dark {
+  --color-primary: #60a5fa;
+  --color-secondary: #94a3b8;
+  --color-accent: #34d399;
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-muted: #1e293b;
+  --color-border: #334155;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Global styles using variables for non-tailwind elements */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
 }
