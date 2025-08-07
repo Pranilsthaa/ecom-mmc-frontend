@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Frame, Menu, X, ShoppingBag, User, Heart } from "lucide-react";
 import { useThemeStore } from "@/stores/useThemeStore";
+import ThemeSelect from "./ui/themeSelect";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useThemeStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +25,6 @@ export default function Navbar() {
     { name: "Testimonials", href: "#testimonials" },
     { name: "Contact", href: "#contact" },
   ];
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheme(e.target.value as "light" | "dark" | "system");
-  };
-
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -93,11 +88,7 @@ export default function Navbar() {
               <span>Order Now</span>
             </motion.button>
           </div>
-          <select onChange={handleChange} value={theme}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="system">System</option>
-          </select>
+          <ThemeSelect />
 
           {/* Mobile Menu Button */}
           <motion.button

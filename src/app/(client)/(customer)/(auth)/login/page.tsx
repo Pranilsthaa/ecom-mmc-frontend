@@ -1,7 +1,7 @@
 "use client";
 
 import LoginForm from "@/components/forms/loginform";
-import { useLogin } from "@/hooks/auth/useLogin";
+import { useLogin } from "@/hooks/api/useLogin";
 import React from "react";
 import { toast } from "sonner";
 

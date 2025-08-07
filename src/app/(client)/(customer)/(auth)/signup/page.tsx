@@ -1,7 +1,7 @@
 "use client";
 import LoginForm from "@/components/forms/loginform";
 import SignupForm from "@/components/forms/signupform";
-import { useSignup } from "@/hooks/auth/useSignup";
+import { useSignup } from "@/hooks/api/useSignup";
 import React from "react";
 
 const Signup = () => {

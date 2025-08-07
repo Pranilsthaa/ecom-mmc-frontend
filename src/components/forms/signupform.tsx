@@ -13,7 +13,7 @@ import {
   Phone,
   Gift,
 } from "lucide-react";
-import { TsignupData } from "@/hooks/auth/useSignup";
+import { TsignupData } from "@/hooks/api/useSignup";
 import { useRouter } from "next/navigation";
 import InputField from "../ui/inputField";
 import LoadingIndicator from "../ui/LoadingIndicator";
