@@ -9,6 +9,8 @@
   --color-foreground: #0f172a;
   --color-muted: #f1f5f9;
   --color-border: #e2e8f0;
+  --color-icon: #575a5e;
+    --color-input-bg: #F1F5F9;
 }
 
 /* Dark mode colors */
@@ -19,7 +21,9 @@
   --color-background: #0f172a;
   --color-foreground: #f8fafc;
   --color-muted: #1e293b;
-  --color-border: #334155;
+  --color-border: #526075;
+  --color-icon: #d5d6d6;
+  --color-input-bg: #1E293B;
 }
 
 /* Global styles using variables for non-tailwind elements */

@@ -2,8 +2,8 @@ import { Eye, EyeOff, LucideIcon, Mail } from "lucide-react";
 import React, { InputHTMLAttributes, useState } from "react";
 
 type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
-  labelFor: string;
+  label?: string;
+  labelFor?: string;
   Icon?: LucideIcon;
   isPassword?: boolean;
 };
@@ -28,12 +28,12 @@ const InputField = ({
           {label}
         </label>
       )}
-      <div className="relative flex items-center w-full pl-4  border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 bg-white/50 backdrop-blur-sm">
-        {Icon && <Icon className=" text-gray-400" size={20} />}
+      <div className="relative bg-[var(--color-input-bg)]/50 flex items-center w-full pl-4 border border-[var(--color-border)] rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200  backdrop-blur-sm">
+        {Icon && <Icon className="mr-2 text-[var(--color-icon)]" size={20} />}
         <input
-          {...rest}
           type={inputType}
-          className="pl-4 h-full py-4 w-full outline-none"
+          className=" h-full py-4 w-full  outline-none placeholder-[var(--color-foreground)]/40"
+          {...rest}
         />
         {isPassword && (
           <button type="button" onClick={() => setShowPassword((p) => !p)}>
