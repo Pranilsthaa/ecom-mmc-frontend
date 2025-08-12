@@ -2,6 +2,7 @@
 
 import type React from "react";
 
+import { motion } from "motion/react";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -242,6 +243,7 @@ export default function CreateOrderPage() {
   const eligible = isPickupEligible(address.city, address.postalCode);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-24">
       <header className="mb-8">
@@ -262,28 +264,38 @@ export default function CreateOrderPage() {
       </header>
 
       {/* Stepper */}
-      <div className="mb-6" aria-live="polite">
+      <div
+        className="z-40 bg-[var(--color-background)] py-4 mb-6 border-b border-[var(--color-border)]"
+        aria-live="polite"
+      >
         <div className="flex items-center gap-3">
           {[0, 1, 2, 3].map((i) => (
             <div key={i} className="flex items-center gap-3">
               <div
-                className={`w-9 h-9 rounded-full grid place-items-center text-sm font-bold
+                className={`relative overflow-hidden w-9 h-9 rounded-full bg-[var(--color-muted)] grid place-items-center text-sm font-bold transition-colors ease-linear delay-100
                 ${
-                  step >= i
-                    ? "bg-[var(--color-primary)] text-white"
-                    : "bg-[var(--color-muted)] text-[var(--color-secondary)]"
+                  step >= i ? " text-white" : " text-[var(--color-secondary)]"
                 }`}
               >
-                {i + 1}
+                <span className="z-10"> {i + 1}</span>
+                <motion.div
+                  className="absolute bg-[var(--color-primary)] transition-transform duration-400 delay-[240ms] w-24 h-24 -left-14 rounded-full border"
+                  style={{
+                    scaleX: step >= i ? 1 : 0,
+                  }}
+                />
               </div>
               {i < 3 && (
                 <div
-                  className={`h-1 w-12 rounded ${
-                    step > i
-                      ? "bg-[var(--color-primary)]"
-                      : "bg-[var(--color-border)]"
-                  }`}
-                />
+                  className={`h-1 w-12 rounded 
+                     bg-[var(--color-border)]`}
+                >
+                  <div
+                    className={`h-full bg-[var(--color-primary)] rounded transition-transform duration-400 origin-left ${
+                      step > i ? "scale-x-100" : "scale-0"
+                    }`}
+                  />
+                </div>
               )}
             </div>
           ))}
@@ -420,7 +432,6 @@ export default function CreateOrderPage() {
                         ? "border-gray-600/40 bg-[var(--color-muted)]/20"
                         : "border-gray-600"
                     } transition-colors duration-200`}
-                    onClick={() => fileInputRef.current?.click()}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
