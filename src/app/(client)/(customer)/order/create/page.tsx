@@ -788,14 +788,14 @@ export default function CreateOrderPage() {
                   <button
                     onClick={onPlaceOrder}
                     disabled={submitting}
-                    className="flex-1 py-2 border border-[var(--color-border)] rounded-lg flex items-center justify-center gap-x-2"
+                    className="flex-1 py-2 border border-[var(--color-border)] rounded-lg flex items-center justify-center gap-x-2 hover:bg-[var(--color-primary)]/20"
                   >
                     {submitting ? "Submitting…" : "Place order"}
                   </button>
                 ) : (
                   <button
                     onClick={onNext}
-                    className=" flex-1 py-2 border border-[var(--color-border)] rounded-lg flex items-center justify-center gap-x-2"
+                    className=" flex-1 py-2 border border-[var(--color-border)] rounded-lg flex items-center justify-center gap-x-2  hover:bg-[var(--color-primary)]/20"
                   >
                     Next <ChevronRight className="w-4 h-4 ml-1" />
                   </button>
