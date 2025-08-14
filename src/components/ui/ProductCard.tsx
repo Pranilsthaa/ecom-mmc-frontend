@@ -1,10 +1,7 @@
-"use client";
-
-import { motion } from "motion/react";
 import Link from "next/link";
-import { Star, Heart, ShoppingCart, TrendingUp, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { Star, ShoppingCart, TrendingUp, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { AddToCartButton } from "./AddtoCardBtn";
 
 export interface Product {
   id: number;
@@ -35,31 +32,13 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
   index = 0,
-  onAddToCart,
-  onToggleWishlist,
-  isInWishlist = false,
   className = "",
 }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
   const discountPercentage = product.originalPrice
     ? Math.round(
         ((product.originalPrice - product.price) / product.originalPrice) * 100
       )
     : 0;
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onAddToCart?.(product);
-  };
-
-  const handleWishlistToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onToggleWishlist?.(product.id);
-  };
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => {
@@ -80,71 +59,45 @@ export default function ProductCard({
       );
     });
   };
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`group relative ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={`group relative ${className}`}>
       <Link href={`/products/${product.id}`}>
         <div className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-2xl overflow-hidden group-hover:shadow-xl group-hover:border-[var(--color-primary)]/20 transition-all duration-300">
           {/* Image Container */}
           <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Placeholder/Loading state */}
-            {!imageLoaded && (
+            {/* {!imageLoaded && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-16 h-16 border-4 border-gray-200 border-t-[var(--color-primary)] rounded-full animate-spin" />
               </div>
-            )}
+            )} */}
 
             {/* Product Image */}
             <Image
               src={product.image}
               alt={product.name}
               fill
-              className={`object-cover transition-all duration-500 group-hover:scale-110 ${
-                imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(true)}
+              className={`object-cover transition-all duration-500 group-hover:scale-110`}
             />
 
             {/* Badges */}
             <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
               {product.isNew && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1"
-                >
+                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
                   <Sparkles className="w-3 h-3" />
                   New
-                </motion.span>
+                </span>
               )}
               {product.isBestseller && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="bg-rose-500 text-white text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1"
-                >
+                <span className="bg-rose-500 text-white text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" />
                   Bestseller
-                </motion.span>
+                </span>
               )}
               {discountPercentage > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold"
-                >
+                <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
                   -{discountPercentage}%
-                </motion.span>
+                </span>
               )}
               {product.inStock === false && (
                 <span className="bg-gray-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
@@ -154,17 +107,9 @@ export default function ProductCard({
             </div>
 
             {/* Quick Actions - Show on Hover */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: isHovered ? 1 : 0,
-                y: isHovered ? 0 : 20,
-              }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-3 right-3 flex flex-col gap-2 z-10"
-            >
+            <div className={`absolute top-3 right-3 flex flex-col gap-2 z-10`}>
               {/* Wishlist Button */}
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleWishlistToggle}
@@ -177,8 +122,8 @@ export default function ProductCard({
                 <Heart
                   className={`w-4 h-4 ${isInWishlist ? "fill-current" : ""}`}
                 />
-              </motion.button>
-            </motion.div>
+              </motion.button> */}
+            </div>
           </div>
 
           {/* Product Info */}
@@ -213,21 +158,11 @@ export default function ProductCard({
                   </span>
                 )}
               </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleAddToCart}
-                disabled={product.inStock === false}
-                className="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--color-primary)]/90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm font-medium"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                {product.inStock === false ? "Out of Stock" : "Add to Cart"}
-              </motion.button>
+              <AddToCartButton product={product} />
             </div>
           </div>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 }

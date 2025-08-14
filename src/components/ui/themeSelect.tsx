@@ -30,13 +30,17 @@ const themeOptions: Option[] = [
 const ThemeSelect: React.FC = () => {
   const { theme, setTheme } = useThemeStore();
   const [isOptionVisible, setIsOptionVisible] = useState(false);
-  const selectRef = useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null!);
 
-  useClickOutside(selectRef, () => {
-    if (isOptionVisible) {
-      setIsOptionVisible(false);
-    }
-  });
+  useClickOutside(
+    selectRef,
+    () => {
+      if (isOptionVisible) {
+        setIsOptionVisible(false);
+      }
+    },
+    isOptionVisible
+  );
 
   // Handle keyboard navigation
   const handleKeyDown = (event: React.KeyboardEvent) => {

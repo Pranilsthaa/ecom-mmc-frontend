@@ -1,4 +1,5 @@
 import { api } from "@/lib/api"
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -10,11 +11,13 @@ const login = async(data: { email: string; password: string }) => {
 }
 
 export const useLogin = () => {
-    const router = useRouter()
+    const router = useRouter();
+    const { setUser } = useAuthStore();
     return useMutation({
         mutationKey: ['login'],
         mutationFn: login,
         onSuccess: (data) => {
+            setUser(data.user);
             toast.success(data.message);
             router.push('/')
         },

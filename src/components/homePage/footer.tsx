@@ -189,7 +189,7 @@ export default function Footer() {
                 Stay Updated
               </h4>
               <p className="text-gray-400">
-                Get the latest news, offers, and memory preservation tips.
+                w Get the latest news, offers, and memory preservation tips.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">

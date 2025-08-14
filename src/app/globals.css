@@ -1,6 +1,33 @@
 @import "tailwindcss";
 
-/* Define custom colors using CSS custom properties */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 100px var(--color-input-bg) inset;
+  -webkit-text-fill-color: var(--color-foreground);
+  caret-color: var(--color-foreground); /* optional */
+}
+
+/* Custom scrollbar styles */
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* custom colors using CSS custom properties */
 :root {
   --color-primary: #3b82f6;
   --color-secondary: #64748b;
@@ -10,7 +37,7 @@
   --color-muted: #f1f5f9;
   --color-border: #e2e8f0;
   --color-icon: #575a5e;
-    --color-input-bg: #F1F5F9;
+  --color-input-bg: #F1F5F9;
 }
 
 /* Dark mode colors */

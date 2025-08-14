@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Frame,
@@ -8,19 +8,25 @@ import {
   X,
   ShoppingBag,
   User,
-  Heart,
-  Search,
   ShoppingCart,
+  LogIn,
 } from "lucide-react";
 import ThemeSelect from "./ui/themeSelect";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useGlobalModalStore } from "@/stores/useGlobalModalStore";
+import LoginForm from "./forms/loginform";
+import { useLogin } from "@/hooks/api/useLogin";
+import LoginSignupSwitcher from "./forms/LoginSignupSwitcher";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cartItemsCount] = useState(0); // TODO: Connect to cart store
   const pathname = usePathname();
+
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +49,11 @@ export default function Navbar() {
     if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
   };
+  const { openModal } = useGlobalModalStore();
+
+  const toggleLoginModal = () => {
+    openModal(<LoginSignupSwitcher />);
+  };
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -54,7 +65,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-3 cursor-pointer"
@@ -96,24 +107,6 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            {/* Search */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
-            >
-              <Search className="w-5 h-5" />
-            </motion.button>
-
-            {/* Wishlist */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
-            >
-              <Heart className="w-5 h-5" />
-            </motion.button>
-
             {/* Cart */}
             <Link href="/cart">
               <motion.button
@@ -130,16 +123,30 @@ export default function Navbar() {
               </motion.button>
             </Link>
 
-            {/* Account */}
-            <Link href="/account">
+            {/* Authentication Section */}
+            {user ? (
+              /* Account Button for authenticated users */
+              <Link href="/account">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
+                >
+                  <User className="w-5 h-5" />
+                </motion.button>
+              </Link>
+            ) : (
+              /* Login button for unauthenticated users - same design as mobile */
               <motion.button
+                onClick={toggleLoginModal}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
+                className="px-3 py-1.5 bg-[var(--color-primary)] text-white rounded-full text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg flex items-center space-x-1"
               >
-                <User className="w-5 h-5" />
+                <LogIn className="w-3.5 h-3.5" />
+                <span>Login</span>
               </motion.button>
-            </Link>
+            )}
 
             {/* Theme Select */}
             <ThemeSelect />
@@ -157,18 +164,32 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
+          {/* Mobile Menu Button and Auth for unauthenticated users */}
+          <div className="lg:hidden flex items-center space-x-3">
+            {!user && (
+              <motion.button
+                onClick={toggleLoginModal}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-3 py-1.5 bg-[var(--color-primary)] text-white rounded-full text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg flex items-center space-x-1"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span>Login</span>
+              </motion.button>
             )}
-          </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </motion.button>
+          </div>
         </div>
       </div>
 
@@ -202,25 +223,29 @@ export default function Navbar() {
               ))}
 
               <div className="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
-                <div className="flex items-center space-x-4">
-                  <Link
-                    href="/cart"
-                    className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200 relative"
-                  >
-                    <ShoppingCart className="w-5 h-5" />
-                    {cartItemsCount > 0 && (
-                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center">
-                        {cartItemsCount}
-                      </span>
-                    )}
-                  </Link>
-                  <Link
-                    href="/account"
-                    className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
-                  >
-                    <User className="w-5 h-5" />
-                  </Link>
-                </div>
+                {user && (
+                  <div className="flex items-center space-x-4">
+                    <Link
+                      href="/cart"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200 relative"
+                    >
+                      <ShoppingCart className="w-5 h-5" />
+                      {cartItemsCount > 0 && (
+                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center">
+                          {cartItemsCount}
+                        </span>
+                      )}
+                    </Link>
+                    <Link
+                      href="/account"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200"
+                    >
+                      <User className="w-5 h-5" />
+                    </Link>
+                  </div>
+                )}
 
                 {/* Mobile Theme Select */}
                 <ThemeSelect />
@@ -228,6 +253,7 @@ export default function Navbar() {
 
               <Link href="/custom">
                 <motion.button
+                  onClick={() => setIsMobileMenuOpen(false)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navItems.length * 0.1 }}
