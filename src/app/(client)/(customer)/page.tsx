@@ -1,5 +1,4 @@
 import Hero from "@/components/homePage/hero";
-import FeaturedProductsServer from "@/components/homePage/FeaturedProductsServer";
 import FeaturedProductsLoading from "@/components/homePage/FeaturedProductsLoading";
 import HomePageClient from "@/components/homePage/HomePageClient";
 import { Metadata } from "next";
