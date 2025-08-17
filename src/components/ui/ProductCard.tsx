@@ -4,20 +4,25 @@ import Image from "next/image";
 import { AddToCartButton } from "./AddtoCardBtn";
 
 export interface Product {
-  id: number;
   name: string;
+  slug: string;
   price: number;
-  originalPrice?: number | null;
-  image: string;
+  original_price?: number | null;
+  image_url: string;
+  image_alt: string;
   rating: number;
-  reviews: number;
+  review_count: number;
   isNew?: boolean;
   isBestseller?: boolean;
-  category?: string;
   description?: string;
-  sizes?: string[];
-  colors?: string[];
-  inStock?: boolean;
+  available_sizes?: string[];
+  color: string;
+  in_stock: boolean;
+  seo_title: string;
+  seo_description: string;
+  is_bestseller: boolean;
+  is_new: boolean;
+  category?: string;
 }
 
 interface ProductCardProps {
@@ -34,9 +39,10 @@ export default function ProductCard({
   index = 0,
   className = "",
 }: ProductCardProps) {
-  const discountPercentage = product.originalPrice
+  const discountPercentage = product.original_price
     ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
+        ((product.original_price - product.price) / product.original_price) *
+          100
       )
     : 0;
 
@@ -61,7 +67,7 @@ export default function ProductCard({
   };
   return (
     <div className={`group relative ${className}`}>
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/products/${product.slug}`}>
         <div className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-2xl overflow-hidden group-hover:shadow-xl group-hover:border-[var(--color-primary)]/20 transition-all duration-300">
           {/* Image Container */}
           <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
@@ -74,8 +80,8 @@ export default function ProductCard({
 
             {/* Product Image */}
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.image_url}
+              alt={product.image_alt}
               fill
               className={`object-cover transition-all duration-500 group-hover:scale-110`}
             />
@@ -99,7 +105,7 @@ export default function ProductCard({
                   -{discountPercentage}%
                 </span>
               )}
-              {product.inStock === false && (
+              {product.in_stock === false && (
                 <span className="bg-gray-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
                   Out of Stock
                 </span>
@@ -141,9 +147,6 @@ export default function ProductCard({
               <span className="text-sm font-medium text-[var(--color-foreground)] ml-1">
                 {product.rating}
               </span>
-              <span className="text-sm text-[var(--color-secondary)]">
-                ({product.reviews})
-              </span>
             </div>
 
             {/* Price and Add to Cart */}
@@ -152,9 +155,9 @@ export default function ProductCard({
                 <span className="text-xl font-bold text-[var(--color-foreground)]">
                   ${product.price}
                 </span>
-                {product.originalPrice && (
+                {product.original_price && (
                   <span className="text-sm text-[var(--color-secondary)] line-through">
-                    ${product.originalPrice}
+                    ${product.original_price}
                   </span>
                 )}
               </div>

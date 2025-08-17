@@ -1,15 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import ProductCard, { Product } from "../ui/ProductCard";
-import { ProductsAPI } from "@/lib/productsAPI";
+import ProductCard from "../ui/ProductCard";
+import { getFeaturedProducts } from "@/lib/productsAPI";
 
-interface FeaturedProductProps {
-  initialProducts?: Product[];
-}
-
-const FeaturedProduct: React.FC<FeaturedProductProps> = async ({}) => {
-  const featuredProducts = await ProductsAPI.getFeaturedProducts();
+const FeaturedProduct = async ({}) => {
+  const featuredProducts = await getFeaturedProducts();
   return (
     <section className="py-16 bg-[var(--color-muted)]/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,7 +27,7 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = async ({}) => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredProducts.map((product, index) => (
+          {featuredProducts?.data?.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
         </div>

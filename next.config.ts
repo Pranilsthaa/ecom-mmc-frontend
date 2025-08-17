@@ -4,10 +4,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'upload.wikimedia.org',
-      }
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        hostname: "plus.unsplash.com",
+      },
     ],
-  }
+  },
 };
 
 export default nextConfig;
