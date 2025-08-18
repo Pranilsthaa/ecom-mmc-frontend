@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AddToCartButton } from "./AddtoCardBtn";
 
 export interface Product {
+  id: string;
   name: string;
   slug: string;
   price: number;
