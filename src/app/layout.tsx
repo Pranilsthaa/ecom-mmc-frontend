@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import QClientProvider from "@/components/clientProvider";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,8 +38,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let user;
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get("refresh_token");
   try {
-    user = await fetchAuthUser();
+    if (cookie) {
+      user = await fetchAuthUser();
+    }
   } catch (err) {
     console.error("Failed to fetch user:", err);
   }
