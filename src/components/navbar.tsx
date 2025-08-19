@@ -27,7 +27,6 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const { user } = useAuthStore();
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);

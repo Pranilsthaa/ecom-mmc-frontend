@@ -1,18 +1,7 @@
 "use client";
 
 import type React from "react";
-import {
-  Heart,
-  Camera,
-  Frame,
-  Star,
-  ArrowRight,
-  Mail,
-  Lock,
-  User,
-  Phone,
-  Gift,
-} from "lucide-react";
+import { ArrowRight, Mail, Lock, User, Phone, Gift } from "lucide-react";
 import { TsignupData } from "@/hooks/api/useSignup";
 import { useRouter } from "next/navigation";
 import InputField from "../ui/inputField";
@@ -33,8 +22,7 @@ export default function SignupForm({
   const router = useRouter();
 
   const [signupData, setSignupData] = useState<TsignupData>({
-    firstname: "",
-    lastname: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
@@ -66,29 +54,16 @@ export default function SignupForm({
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <InputField
-                  label="First Name"
-                  labelFor="firstName"
-                  placeholder="Enter first name"
-                  id="firstName"
-                  Icon={User}
-                  value={signupData.firstname}
-                  onChange={(e) => handleChange(e, "firstname")}
-                />
-              </div>
-              <div className="space-y-2">
-                <InputField
-                  label="Last Name"
-                  labelFor="lastName"
-                  placeholder="Enter last name"
-                  id="lastName"
-                  Icon={User}
-                  value={signupData.lastname}
-                  onChange={(e) => handleChange(e, "lastname")}
-                />
-              </div>
+            <div className="space-y-2">
+              <InputField
+                label="Name"
+                labelFor="name"
+                placeholder="Enter your name"
+                id="name"
+                Icon={User}
+                value={signupData.name}
+                onChange={(e) => handleChange(e, "name")}
+              />
             </div>
 
             <div className="space-y-2">

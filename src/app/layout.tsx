@@ -20,13 +20,15 @@ export const metadata: Metadata = {
 };
 
 const fetchAuthUser = async () => {
-  const response = await fetch("http://192.168.1.10/api/auth/me", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+    method: "POST",
     cache: "no-store",
   });
   if (response.status !== 200) {
     throw new Error("Failed to fetch user");
   }
-  return response.json();
+  const data = await response.json();
+  return data.user;
 };
 
 export default async function RootLayout({
@@ -46,7 +48,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QClientProvider user={null}>
+        <QClientProvider user={user}>
           <ThemeProvider>{children}</ThemeProvider>
         </QClientProvider>
       </body>

@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from "motion/react";
 const LoginSignupSwitcher = () => {
   const [activeForm, setActiveForm] = useState<"login" | "signup">("login");
   const { mutate: login, isPending } = useLogin();
-  const { mutate: signup, isPending: isSignupPending } = useSignup();
+  const { mutate: signup, isPending: isSignupPending } = useSignup(() =>
+    setActiveForm("login")
+  );
 
   return (
     <div className="relative overflow-hidden">
