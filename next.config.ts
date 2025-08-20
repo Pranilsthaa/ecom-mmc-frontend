@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
         hostname: "upload.wikimedia.org",
       },
       {
+        hostname: "example.com",
+      },
+      {
         hostname: "plus.unsplash.com",
       },
     ],

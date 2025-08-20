@@ -16,8 +16,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useGlobalModalStore } from "@/stores/useGlobalModalStore";
-import LoginForm from "./forms/loginform";
-import { useLogin } from "@/hooks/api/useLogin";
 import LoginSignupSwitcher from "./forms/LoginSignupSwitcher";
 
 export default function Navbar() {
@@ -107,20 +105,22 @@ export default function Navbar() {
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center space-x-4">
             {/* Cart */}
-            <Link href="/cart">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200 relative"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                {cartItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center">
-                    {cartItemsCount}
-                  </span>
-                )}
-              </motion.button>
-            </Link>
+            {user && (
+              <Link href="/cart">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 text-[var(--color-foreground)] hover:text-rose-600 transition-colors duration-200 relative"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  {cartItemsCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </motion.button>
+              </Link>
+            )}
 
             {/* Authentication Section */}
             {user ? (

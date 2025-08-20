@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { ArrowRight, Mail, Lock, User, Phone, Gift } from "lucide-react";
-import { TsignupData } from "@/hooks/api/useSignup";
+import { TsignupData } from "@/hooks/api/useAuth";
 import { useRouter } from "next/navigation";
 import InputField from "../ui/inputField";
 import LoadingIndicator from "../ui/LoadingIndicator";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useClickOutside } from "@/hooks/ui/useClickOutside";
 import { useGlobalModalStore } from "@/stores/useGlobalModalStore";
 import { AnimatePresence, motion } from "motion/react";
@@ -21,6 +23,7 @@ const Modal = () => {
   }, [isOpen]);
 
   useClickOutside(modalRef, () => closeModal(), isOpen);
+  if (typeof window === "undefined") return null;
 
   return createPortal(
     <AnimatePresence>
@@ -45,7 +48,7 @@ const Modal = () => {
             >
               ✕
             </button>
-            {/* we can add modal content here */}
+            {/*modal content here */}
             {content}
           </motion.div>
         </motion.div>

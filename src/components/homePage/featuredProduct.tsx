@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import ProductCard from "../ui/ProductCard";
-import { getFeaturedProducts } from "@/lib/productsAPI";
+import { getFeaturedProducts } from "@/lib/server/productsAPI";
 
 const FeaturedProduct = async ({}) => {
   const featuredProducts = await getFeaturedProducts();

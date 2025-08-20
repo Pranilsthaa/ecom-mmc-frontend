@@ -1,4 +1,5 @@
 import axios, { isAxiosError } from "axios";
+import { toast } from "sonner";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -18,7 +19,7 @@ api.interceptors.response.use(
         } catch (refreshError) {
           if (isAxiosError(refreshError)) {
             if (refreshError.response?.status === 401) {
-              window.location.href = "/login";
+              toast.message("Session expired. Please log in again.");
             }
           }
         }

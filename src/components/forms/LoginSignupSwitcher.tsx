@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import LoginForm from "./loginform";
 import SignupForm from "./signupform";
-import { useLogin } from "@/hooks/api/useLogin";
-import { useSignup } from "@/hooks/api/useSignup";
+import { useLogin } from "@/hooks/api/useAuth";
+import { useSignup } from "@/hooks/api/useAuth";
 import { motion, AnimatePresence } from "motion/react";
 
 const LoginSignupSwitcher = () => {
