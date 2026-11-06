@@ -1,14 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
-import {
-  Frame,
-  Mail,
-  Phone,
-  MapPin,
-  Heart,
-} from "lucide-react";
 import { Facebook, Instagram, Twitter } from "@/components/layout/social-icons";
+import { Frame, Heart, Mail, MapPin, Phone } from "lucide-react";
+import { motion } from "motion/react";
 
 export default function Footer() {
   const footerLinks = {
@@ -48,6 +42,7 @@ export default function Footer() {
         <div className="py-16 grid lg:grid-cols-4 gap-12">
           {/* Brand Section */}
           <motion.div
+            viewport={{ once: true }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -72,7 +67,12 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-400">
                 <Mail className="w-4 h-4 text-rose-400" />
-                <a href="mailto:hello@memoryframe.com" className="hover:text-rose-400">hello@memoryframe.com</a>
+                <a
+                  href="mailto:hello@memoryframe.com"
+                  className="hover:text-rose-400"
+                >
+                  hello@memoryframe.com
+                </a>
               </div>
               <div className="flex items-center space-x-3 text-gray-400">
                 <Phone className="w-4 h-4 text-rose-400" />
@@ -87,6 +87,7 @@ export default function Footer() {
 
           {/* Links Sections */}
           <motion.div
+            viewport={{ once: true }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
@@ -108,6 +109,7 @@ export default function Footer() {
           </motion.div>
 
           <motion.div
+            viewport={{ once: true }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -129,6 +131,7 @@ export default function Footer() {
           </motion.div>
 
           <motion.div
+            viewport={{ once: true }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -177,6 +180,7 @@ export default function Footer() {
 
         {/* Newsletter Section */}
         <motion.div
+          viewport={{ once: true }}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -211,6 +215,7 @@ export default function Footer() {
 
         {/* Bottom Footer */}
         <motion.div
+          viewport={{ once: true }}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useRef } from "react";
 import {
   ArrowRight,
@@ -10,7 +11,11 @@ import {
   Heart,
   Camera,
   Frame,
+  Flower2,
+  ShoppingBag,
 } from "lucide-react";
+
+const MotionLink = motion.create(Link);
 
 export default function Hero() {
   const reducedMotion = useReducedMotion();
@@ -126,15 +131,16 @@ export default function Hero() {
             transition={{ delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <motion.a
-              href="#gallery"
+            <MotionLink
+              href="/order"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
             >
-              <span>Get Started - It&apos;s Easy!</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-            </motion.a>
+              <ShoppingBag className="w-5 h-5" aria-hidden="true" />
+              <span>Order Now</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true" />
+            </MotionLink>
 
             <motion.a
               href="#how-it-works"
@@ -145,6 +151,30 @@ export default function Hero() {
               <Play className="w-5 h-5" />
               <span>See How We Do It</span>
             </motion.a>
+          </motion.div>
+
+          {/* Quick order shortcuts */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75 }}
+            className="flex flex-wrap items-center gap-3 text-sm"
+          >
+            <span className="text-gray-500 dark:text-gray-400">Or jump straight to:</span>
+            <Link
+              href="/order?type=frame"
+              className="inline-flex items-center gap-2 rounded-full border border-rose-200/70 dark:border-rose-500/30 bg-white/60 dark:bg-surface/60 px-4 py-2 font-medium text-gray-700 dark:text-gray-200 transition-all hover:-translate-y-0.5 hover:border-rose-400 hover:text-rose-600 dark:hover:text-rose-400 hover:shadow-md"
+            >
+              <Frame className="w-4 h-4 text-rose-500" aria-hidden="true" />
+              Frame a photo
+            </Link>
+            <Link
+              href="/order?type=flowers"
+              className="inline-flex items-center gap-2 rounded-full border border-amber-200/70 dark:border-amber-500/30 bg-white/60 dark:bg-surface/60 px-4 py-2 font-medium text-gray-700 dark:text-gray-200 transition-all hover:-translate-y-0.5 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 hover:shadow-md"
+            >
+              <Flower2 className="w-4 h-4 text-amber-500" aria-hidden="true" />
+              Preserve flowers
+            </Link>
           </motion.div>
 
           {/* Trust indicators */}

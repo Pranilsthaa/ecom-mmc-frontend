@@ -39,6 +39,8 @@ body {
 button, a, input { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid #f43f5e; outline-offset: 4px; }
+/* Elements focused from code (skip-link target, wizard step headings) aren't interactive. */
+[tabindex="-1"]:focus-visible { outline: none; }
 .skip-link {
   position: fixed;
   top: 1rem;
