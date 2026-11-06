@@ -1,10 +1,18 @@
 "use client";
 
-import { motion, useInView, useScroll, useTransform } from "motion/react";
+import { Calendar, MapPin, Quote, Star } from "lucide-react";
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
+import Image from "next/image";
 import { useRef } from "react";
-import { Star, Quote, MapPin, Calendar } from "lucide-react";
 
 export default function Testimonials() {
+  const reducedMotion = useReducedMotion();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -18,9 +26,9 @@ export default function Testimonials() {
   const testimonials = [
     {
       id: 1,
-      name: "Jessica Martinez",
+      name: "Jessica Martinesss",
       role: "Mom of 3",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/placeholder.svg",
       rating: 5,
       text: "I was honestly skeptical about ordering frames online, but wow! The quality blew me away. Sarah personally called me to discuss the layout for my kids' school photos. The frames arrived perfectly packaged, and they look absolutely stunning in our hallway. My mother-in-law keeps asking where I got them!",
       location: "Denver, CO",
@@ -31,7 +39,7 @@ export default function Testimonials() {
       id: 2,
       name: "Robert & Linda Chen",
       role: "Celebrating 30 years",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/placeholder.svg",
       rating: 5,
       text: "We wanted something special for our anniversary photos, not just another generic frame from the store. Mike helped us choose the perfect raisin wood finish that matches our dining room furniture. The craftsmanship is incredible - you can feel the quality. Worth every penny!",
       location: "Portland, OR",
@@ -42,7 +50,7 @@ export default function Testimonials() {
       id: 3,
       name: "Amanda Thompson",
       role: "Recent bride",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/placeholder.svg",
       rating: 5,
       text: "Planning a wedding is stressful enough, but MemoryFrame made this part so easy! They worked with my weird timeline (needed them in 2 weeks) and even sent me photos during the process. My wedding photos look like they belong in a museum. All my friends are asking for the contact info!",
       location: "Nashville, TN",
@@ -54,10 +62,13 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-20 lg:py-32 bg-gradient-to-br from-rose-50/50 to-amber-50/50 relative overflow-hidden"
+      className="py-20 lg:py-32 bg-gradient-to-br from-rose-50/50 to-amber-50/50 dark:from-rose-950/20 dark:to-amber-950/20 relative overflow-hidden"
     >
       {/* Subtle Background Elements */}
-      <motion.div style={{ y }} className="absolute inset-0 opacity-5">
+      <motion.div
+        style={reducedMotion ? undefined : { y }}
+        className="absolute inset-0 opacity-5"
+      >
         <div className="absolute top-20 left-20 w-32 h-32 border border-rose-300 rounded-full"></div>
         <div className="absolute bottom-20 right-20 w-24 h-24 border border-amber-300 rounded-lg rotate-45"></div>
       </motion.div>
@@ -71,15 +82,15 @@ export default function Testimonials() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800">
+          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100">
             Real Stories from{" "}
-            <span className="bg-gradient-to-r from-rose-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-rose-600 dark:from-rose-400 to-orange-600 dark:to-orange-400 bg-clip-text text-transparent">
               Real Families
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Don't just take our word for it. Here's what families are saying
-            about their MemoryFrame experience.
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Don&apos;t just take our word for it. Here&apos;s what families are
+            saying about their MemoryFrame experience.
           </p>
         </motion.div>
 
@@ -92,13 +103,13 @@ export default function Testimonials() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/50 relative group"
+              className="bg-white/70 dark:bg-surface/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/50 dark:border-gray-700/50 relative group"
             >
               {/* Verified Badge */}
               {testimonial.verified && (
                 <div className="absolute -top-3 right-6">
                   <div className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                    <div className="w-2 h-2 bg-white dark:bg-surface rounded-full"></div>
                     <span>Verified</span>
                   </div>
                 </div>
@@ -122,30 +133,34 @@ export default function Testimonials() {
                       />
                     ))}
                   </div>
-                  <div className="flex items-center space-x-1 text-gray-400 text-sm">
+                  <div className="flex items-center space-x-1 text-gray-400 dark:text-gray-400 text-sm">
                     <Calendar className="w-3 h-3" />
                     <span>{testimonial.date}</span>
                   </div>
                 </div>
 
                 {/* Testimonial Text */}
-                <p className="text-gray-700 leading-relaxed text-base">
-                  "{testimonial.text}"
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed text-base">
+                  &quot;{testimonial.text}&quot;
                 </p>
 
                 {/* Customer Info */}
-                <div className="flex items-center space-x-4 pt-4 border-t border-gray-100">
-                  <img
+                <div className="flex items-center space-x-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <Image
+                    width={48}
+                    height={48}
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-rose-200"
                   />
                   <div className="flex-1">
-                    <h4 className="font-bold text-gray-800">
+                    <h4 className="font-bold text-gray-800 dark:text-gray-100">
                       {testimonial.name}
                     </h4>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
-                    <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {testimonial.role}
+                    </p>
+                    <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400 mt-1">
                       <MapPin className="w-3 h-3" />
                       <span>{testimonial.location}</span>
                     </div>
@@ -192,11 +207,15 @@ export default function Testimonials() {
               transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
               className="text-center space-y-2 group"
             >
-              <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-rose-600 to-orange-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+              <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-rose-600 dark:from-rose-400 to-orange-600 dark:to-orange-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 {stat.number}
               </div>
-              <div className="text-gray-700 font-semibold">{stat.label}</div>
-              <div className="text-gray-500 text-sm">{stat.subtext}</div>
+              <div className="text-gray-700 dark:text-gray-200 font-semibold">
+                {stat.label}
+              </div>
+              <div className="text-gray-500 dark:text-gray-400 text-sm">
+                {stat.subtext}
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -208,10 +227,10 @@ export default function Testimonials() {
           transition={{ duration: 0.8, delay: 1 }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-600 mb-4">
-            Join the families who've made MemoryFrame part of their story
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Join the families who&apos;ve made MemoryFrame part of their story
           </p>
-          <div className="flex justify-center items-center space-x-2 text-sm text-gray-500">
+          <div className="flex justify-center items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
             <span>★★★★★</span>
             <span>•</span>
             <span>Featured in Better Homes & Gardens</span>

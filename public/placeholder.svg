@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500" fill="none">
+  <defs><linearGradient id="bg" x2="400" y2="500" gradientUnits="userSpaceOnUse"><stop stop-color="#fff1f2"/><stop offset="1" stop-color="#fef3c7"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h400v500H0z"/>
+  <rect x="55" y="75" width="290" height="350" rx="8" stroke="#92400e" stroke-opacity=".4" stroke-width="16"/>
+  <rect x="77" y="97" width="246" height="306" rx="2" stroke="#92400e" stroke-opacity=".15" stroke-width="2"/>
+  <path d="M200 260s-48-29-48-58a27 27 0 0 1 48-17 27 27 0 0 1 48 17c0 29-48 58-48 58Z" fill="#f43f5e" fill-opacity=".7"/>
+  <text x="200" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#78350f">Your story, beautifully framed</text>
+</svg>

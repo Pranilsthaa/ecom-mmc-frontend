@@ -71,22 +71,24 @@ export default function CTA() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <motion.button
+            <motion.a
+              href="#contact"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white hover:bg-gray-50 text-rose-600 px-10 py-4 rounded-full font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-2xl flex items-center space-x-2 group"
+              className="bg-white dark:bg-surface hover:bg-gray-50 text-rose-600 dark:text-rose-400 px-10 py-4 rounded-full font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-2xl flex items-center space-x-2 group"
             >
               <span>Start Your Order Now</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-            </motion.button>
+            </motion.a>
 
-            <motion.button
+            <motion.a
+              href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 hover:border-white/50 px-10 py-4 rounded-full font-bold text-lg transition-all duration-200 backdrop-blur-sm"
             >
-              View Pricing
-            </motion.button>
+              Ask About Pricing
+            </motion.a>
           </motion.div>
 
           {/* Trust Indicators */}

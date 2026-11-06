@@ -59,13 +59,13 @@ export default function HowItWorks() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-20"
         >
-          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800">
+          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100">
             How It{" "}
-            <span className="bg-gradient-to-r from-rose-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-rose-600 dark:from-rose-400 to-orange-600 dark:to-orange-400 bg-clip-text text-transparent">
               Works
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             From upload to delivery, we make preserving your memories simple and
             stress-free.
           </p>
@@ -109,17 +109,17 @@ export default function HowItWorks() {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={isInView ? { scale: 1, rotate: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
-                  className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center mx-auto border border-gray-100"
+                  className="w-20 h-20 bg-white dark:bg-surface rounded-2xl shadow-lg flex items-center justify-center mx-auto border border-gray-100 dark:border-gray-800"
                 >
-                  <step.icon className="w-10 h-10 text-rose-600" />
+                  <step.icon className="w-10 h-10 text-rose-600 dark:text-rose-400" />
                 </motion.div>
 
                 {/* Content */}
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-bold text-gray-800">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -135,13 +135,14 @@ export default function HowItWorks() {
           transition={{ duration: 0.8, delay: 1 }}
           className="text-center mt-20"
         >
-          <motion.button
+          <motion.a
+              href="#contact"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             Start Your Order Today
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

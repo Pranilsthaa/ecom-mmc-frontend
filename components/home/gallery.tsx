@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { Heart, Star, Eye } from "lucide-react";
@@ -13,7 +14,7 @@ export default function Gallery() {
       id: 1,
       title: "Wedding Memories",
       category: "Wedding",
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/placeholder.svg",
       rating: 5,
       views: 1200,
     },
@@ -21,7 +22,7 @@ export default function Gallery() {
       id: 2,
       title: "Family Portrait",
       category: "Family",
-      image: "/placeholder.svg?height=500&width=400",
+      image: "/placeholder.svg",
       rating: 5,
       views: 890,
     },
@@ -29,7 +30,7 @@ export default function Gallery() {
       id: 3,
       title: "Baby's First Steps",
       category: "Milestone",
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/placeholder.svg",
       rating: 5,
       views: 2100,
     },
@@ -37,7 +38,7 @@ export default function Gallery() {
       id: 4,
       title: "Anniversary Celebration",
       category: "Anniversary",
-      image: "/placeholder.svg?height=600&width=400",
+      image: "/placeholder.svg",
       rating: 5,
       views: 750,
     },
@@ -45,7 +46,7 @@ export default function Gallery() {
       id: 5,
       title: "Graduation Day",
       category: "Achievement",
-      image: "/placeholder.svg?height=400&width=300",
+      image: "/placeholder.svg",
       rating: 5,
       views: 1500,
     },
@@ -53,7 +54,7 @@ export default function Gallery() {
       id: 6,
       title: "Travel Adventures",
       category: "Travel",
-      image: "/placeholder.svg?height=500&width=400",
+      image: "/placeholder.svg",
       rating: 5,
       views: 980,
     },
@@ -70,14 +71,14 @@ export default function Gallery() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800">
+          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100">
             Our{" "}
-            <span className="bg-gradient-to-r from-rose-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-rose-600 dark:from-rose-400 to-orange-600 dark:to-orange-400 bg-clip-text text-transparent">
               Gallery
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            See how we've helped families preserve their most precious memories
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            See how we&apos;ve helped families preserve their most precious memories
             with our beautiful raisin frames.
           </p>
         </motion.div>
@@ -91,11 +92,13 @@ export default function Gallery() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               whileHover={{ y: -10 }}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-white dark:bg-surface rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
               {/* Image Container */}
               <div className="relative aspect-[4/5] overflow-hidden">
-                <img
+                <Image
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   src={item.image || "/placeholder.svg"}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -120,15 +123,15 @@ export default function Gallery() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
+                  className="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-surface/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white dark:hover:bg-gray-800"
                 >
-                  <Heart className="w-5 h-5 text-rose-600" />
+                  <Heart className="w-5 h-5 text-rose-600 dark:text-rose-400" />
                 </motion.button>
               </div>
 
               {/* Content */}
               <div className="p-6 space-y-3">
-                <h3 className="text-xl font-bold text-gray-800 group-hover:text-rose-600 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
                   {item.title}
                 </h3>
 
@@ -145,7 +148,7 @@ export default function Gallery() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="text-rose-600 hover:text-rose-700 font-semibold text-sm transition-colors duration-200"
+                    className="text-rose-600 dark:text-rose-400 hover:text-rose-700 font-semibold text-sm transition-colors duration-200"
                   >
                     View Details
                   </motion.button>

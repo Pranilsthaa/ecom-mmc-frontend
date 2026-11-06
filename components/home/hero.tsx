@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import {
   ArrowRight,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 export default function Hero() {
+  const reducedMotion = useReducedMotion();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -35,11 +36,11 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+      className="relative min-h-[calc(100svh-5rem)] flex items-center justify-center py-24 lg:py-28 overflow-hidden"
     >
       {/* Dynamic Parallax Background */}
       <motion.div
-        style={{ y: springY, opacity, scale }}
+        style={reducedMotion ? undefined : { y: springY, opacity, scale }}
         className="absolute inset-0 -z-10"
       >
         <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-rose-400 rounded-full animate-ping" />
@@ -51,7 +52,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
         {/* Left Content with Parallax */}
         <motion.div
-          style={{ y: springTextY }}
+          style={reducedMotion ? undefined : { y: springTextY }}
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -62,10 +63,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center space-x-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 border border-rose-200/50 shadow-sm"
+            className="inline-flex items-center space-x-2 bg-white/70 dark:bg-surface/70 backdrop-blur-sm rounded-full px-4 py-2 border border-rose-200/50 shadow-sm"
           >
-            <Award className="w-4 h-4 text-rose-600" />
-            <span className="text-sm font-medium text-gray-700">
+            <Award className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
               since 2023
             </span>
           </motion.div>
@@ -78,13 +79,13 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.8 }}
               className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight"
             >
-              <span className="text-gray-800">Turn Your</span>
+              <span className="text-gray-800 dark:text-gray-100">Turn Your</span>
               <br />
-              <span className="bg-gradient-to-r from-rose-600 via-orange-500 to-amber-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-rose-600 dark:from-rose-400 via-orange-500 to-amber-500 bg-clip-text text-transparent">
                 Favorite Photos
               </span>
               <br />
-              <span className="text-gray-800 text-4xl lg:text-5xl">
+              <span className="text-gray-800 dark:text-gray-100 text-4xl lg:text-5xl">
                 into Heirlooms
               </span>
             </motion.h1>
@@ -93,9 +94,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-xl text-gray-600 leading-relaxed max-w-2xl font-light"
+              className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl font-light"
             >
-              We're Sarah & Mike, and we started MemoryFrame after struggling to
+              We&apos;re Sarah & Mike, and we started MemoryFrame after struggling to
               find quality frames for our own wedding photos. Now we help
               families across America preserve their most treasured moments in
               handcrafted raisin wood frames.
@@ -113,8 +114,8 @@ export default function Hero() {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 fill-current" />
               ))}
-              <span className="ml-2 text-gray-700 font-semibold">4.8/5</span>
-              <span className="text-gray-500 text-sm">(2,847 reviews)</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-200 font-semibold">4.8/5</span>
+              <span className="text-gray-500 dark:text-gray-400 text-sm">(2,847 reviews)</span>
             </div>
           </motion.div>
 
@@ -125,23 +126,25 @@ export default function Hero() {
             transition={{ delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <motion.button
+            <motion.a
+              href="#gallery"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
             >
-              <span>Get Started - It's Easy!</span>
+              <span>Get Started - It&apos;s Easy!</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-            </motion.button>
+            </motion.a>
 
-            <motion.button
+            <motion.a
+              href="#how-it-works"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-white/70 backdrop-blur-sm hover:bg-white/90 text-gray-700 hover:text-rose-600 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200/50 flex items-center justify-center space-x-2"
+              className="bg-white/70 dark:bg-surface/70 backdrop-blur-sm hover:bg-white/90 dark:hover:bg-gray-800/90 text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-400 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200/50 dark:border-gray-700/50 flex items-center justify-center space-x-2"
             >
               <Play className="w-5 h-5" />
               <span>See How We Do It</span>
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           {/* Trust indicators */}
@@ -149,7 +152,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="flex items-center space-x-6 text-sm text-gray-500 pt-4"
+            className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 pt-4"
           >
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -164,7 +167,7 @@ export default function Hero() {
 
         {/* Right Content - More Realistic Hero Image */}
         <motion.div
-          style={{ y: springImageY }}
+          style={reducedMotion ? undefined : { y: springImageY }}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -179,21 +182,21 @@ export default function Hero() {
               }}
               transition={{
                 duration: 8,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
-              className="relative bg-gradient-to-br from-amber-100 to-orange-100 rounded-3xl shadow-2xl overflow-hidden border-8 border-amber-800/20 transform rotate-2"
+              className="relative bg-gradient-to-br from-amber-100 dark:from-amber-950/40 to-orange-100 dark:to-orange-950/40 rounded-3xl shadow-2xl overflow-hidden border-8 border-amber-800/20 transform rotate-2"
             >
-              <div className="aspect-[4/5] bg-gradient-to-br from-rose-50 via-amber-50 to-orange-50 flex items-center justify-center p-8">
+              <div className="aspect-[4/5] bg-gradient-to-br from-rose-50 dark:from-rose-950/30 via-amber-50 dark:via-amber-950/20 to-orange-50 dark:to-orange-950/30 flex items-center justify-center p-8">
                 <div className="text-center space-y-4">
                   <div className="w-20 h-20 bg-gradient-to-br from-rose-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto shadow-lg transform -rotate-3">
                     <Heart className="w-10 h-10 text-white" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-gray-800">
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                       Your Story
                     </h3>
-                    <p className="text-gray-600 text-sm">Beautifully Framed</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">Beautifully Framed</p>
                     <div className="flex justify-center space-x-1">
                       {[...Array(5)].map((_, i) => (
                         <Star
@@ -216,15 +219,15 @@ export default function Hero() {
               }}
               transition={{
                 duration: 6,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
                 delay: 1,
               }}
-              className="absolute -top-4 -left-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 border border-gray-100 transform -rotate-6"
+              className="absolute -top-4 -left-4 bg-white/90 dark:bg-surface/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 border border-gray-100 dark:border-gray-800 transform -rotate-6"
             >
               <div className="flex items-center space-x-2">
-                <Camera className="w-4 h-4 text-rose-600" />
-                <span className="text-sm font-medium text-gray-700">
+                <Camera className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
                   Handcrafted
                 </span>
               </div>
@@ -238,15 +241,15 @@ export default function Hero() {
               }}
               transition={{
                 duration: 7,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
                 delay: 2,
               }}
-              className="absolute -bottom-4 -right-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 border border-gray-100 transform rotate-3"
+              className="absolute -bottom-4 -right-4 bg-white/90 dark:bg-surface/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 border border-gray-100 dark:border-gray-800 transform rotate-3"
             >
               <div className="flex items-center space-x-2">
                 <Frame className="w-4 h-4 text-amber-600" />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
                   Premium Wood
                 </span>
               </div>
@@ -260,7 +263,7 @@ export default function Hero() {
               }}
               transition={{
                 duration: 4,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
               className="absolute top-1/4 -right-8 text-rose-400"
@@ -275,7 +278,7 @@ export default function Hero() {
               }}
               transition={{
                 duration: 5,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
                 delay: 2,
               }}
@@ -296,16 +299,16 @@ export default function Hero() {
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          transition={{ duration: 2, repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY }}
           className="flex flex-col items-center space-y-2"
         >
-          <span className="text-xs text-gray-500 font-medium">
+          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
             Scroll to explore
           </span>
           <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
             <motion.div
               animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+              transition={{ duration: 2, repeat: reducedMotion ? 0 : Number.POSITIVE_INFINITY }}
               className="w-1 h-3 bg-rose-400 rounded-full mt-2"
             />
           </div>

@@ -6,11 +6,9 @@ import {
   Mail,
   Phone,
   MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
   Heart,
 } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "@/components/layout/social-icons";
 
 export default function Footer() {
   const footerLinks = {
@@ -74,7 +72,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-400">
                 <Mail className="w-4 h-4 text-rose-400" />
-                <span>hello@memoryframe.com</span>
+                <a href="mailto:hello@memoryframe.com" className="hover:text-rose-400">hello@memoryframe.com</a>
               </div>
               <div className="flex items-center space-x-3 text-gray-400">
                 <Phone className="w-4 h-4 text-rose-400" />
@@ -157,13 +155,14 @@ export default function Footer() {
               </h5>
               <div className="flex space-x-4">
                 {[
-                  { icon: Facebook, href: "#" },
-                  { icon: Instagram, href: "#" },
-                  { icon: Twitter, href: "#" },
+                  { icon: Facebook, href: "#", label: "Facebook" },
+                  { icon: Instagram, href: "#", label: "Instagram" },
+                  { icon: Twitter, href: "#", label: "Twitter" },
                 ].map((social, index) => (
                   <motion.a
                     key={index}
                     href={social.href}
+                    aria-label={social.label}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-br hover:from-rose-500 hover:to-orange-500 rounded-lg flex items-center justify-center transition-all duration-200"
@@ -195,6 +194,7 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row gap-4">
               <input
                 type="email"
+                aria-label="Email address for newsletter"
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-white placeholder-gray-400 transition-colors duration-200"
               />

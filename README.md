@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MemoryFrame
 
-## Getting Started
+Next.js App Router foundation for the company branding and ecommerce website. The supplied homepage is the landing page at `/`; its copy, section layouts, animations, and rose/orange palette are retained.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+Use Node.js 20.9+ and Bun (the repository uses Bun 1.2.15).
+
+```sh
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+bun run lint
+bun run typecheck
+bun run build
+bun start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`bun start` serves the production build. Next.js downloads and self-hosts the existing Geist fonts during builds, so the first build needs access to Google Fonts.
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+app/
+  layout.tsx                 Shared navigation, footer, metadata, and providers
+  page.tsx                   Landing page composition (Server Component)
+  globals.css                Tailwind, theme tokens, and global accessibility styles
+  favicon.ico
+components/
+  home/                      Hero, features, process, gallery, reviews, and CTA
+  layout/                    Navbar, footer, and local social icons
+  providers/                 Reduced-motion configuration
+  theme/                     Theme toggle and preference synchronization
+public/
+  placeholder.svg            Local fallback for the supplied placeholder images
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Keep route entry points in `app/`, reusable UI in `components/`, and static assets in `public/`. Add actual shop routes under `app/` when product and checkout requirements are defined; there are no placeholder routes to maintain.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Themes and navigation
 
-## Deploy on Vercel
+The theme follows the visitor's system preference until they use the navbar toggle. The choice persists in local storage and syncs across tabs. A small initialization script applies the preference before paint. Color tokens live in `app/globals.css`; component-specific adjustments use Tailwind's `dark:` variant.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The navbar links to existing landing sections and includes a mobile menu with Escape-to-close, a skip link, and visible keyboard focus. Main calls to action navigate to the gallery, process, or contact section.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Current scope
+
+This is the initial landing-page setup. Original demo copy, company/contact information, reviews, claims, and placeholder imagery are retained for later replacement. The original gallery detail/favorite controls, newsletter subscription, social links, and policy/support links are presentation placeholders. Checkout, photo upload, pricing, authentication, and newsletter delivery are not implemented. No site has been published.
